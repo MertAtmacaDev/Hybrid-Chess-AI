@@ -1,66 +1,69 @@
 import pygame
 import chess
 import sys
-
-WIDTH = 512
-HEIGHT = 512
-SQ_SIZE = WIDTH // 8
-MAX_FPS = 60
-BOARD_SIZE = 8
-COLORS = [pygame.Color(235, 235, 208), pygame.Color(119, 149, 86)] 
-
-IMAGES = {}
-
-def load_images():
-    pieces = ['wp', 'wR', 'wN', 'wB', 'wQ', 'wK', 'bp', 'bR', 'bN', 'bB', 'bQ', 'bK']
-    for piece in pieces:
-        try:
-            IMAGES[piece] = pygame.transform.smoothscale(pygame.image.load(f"images/{piece}.png"), (SQ_SIZE, SQ_SIZE))
-        except FileNotFoundError:
-            print(f"Uyarı: images/{piece}.png bulunamadı")
-
-def draw_board(screen):
-    for row in range(8):
-        for col in range(8):
-            color = COLORS[(row + col) % 2]
-            pygame.draw.rect(screen, color, pygame.Rect(col * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
-
-def draw_pieces(screen, board):
-    for square in chess.SQUARES:
-        piece = board.piece_at(square)
-        if piece:
-            color = 'w' if piece.color == chess.WHITE else 'b'
-
-            symbol = piece.symbol().upper()
-            piece_type = symbol if symbol != 'P' else 'p'
-            image_name = color + piece_type
-            
-            # python-chess has a1 at the bottom-left, but pygame starts at the top-left. Inverting the row
-            row = (BOARD_SIZE -1 ) - (square // 8)
-            col = square % 8
-            
-            screen.blit(IMAGES[image_name], pygame.Rect(col * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+import renderer
+import engine
+import constants
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    pygame.display.set_caption("Hibrit Satranç Yapay Zekası")
+    screen = pygame.display.set_mode((constants.WIDTH, constants.HEIGHT))
+    pygame.display.set_caption("Hybrid-Chess-AI")
     clock = pygame.time.Clock()
     
     board = chess.Board()
-    load_images()
+    renderer.load_piece_images()
     
     running = True
+    selected_square = None
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_a:
+                    #score = engine.minimax(board, depth=2, maximing=True)
+                    #print(f"Skor: {score}")
+
+                    move = engine.minimax_move(board,depth=3)
+                    print(move)
+                
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x,y = pygame.mouse.get_pos()
+                col = x // constants.SQ_SIZE
+                row = y // constants.SQ_SIZE
+
+                
+                square = (7-row)*8 + col
+                piece = board.piece_at(square)
+
+                if selected_square == None:
+                    if piece != None:
+                        selected_square = square
+                        print(f"Selected {square}")
+                else:
+                    new_move = chess.Move(selected_square, square)
+
+                    if new_move in board.legal_moves:
+                        board.push(new_move)
+                        print("new move correct")
+                    else:
+                        print("illegal move")
+
+
+                    selected_square = None
+
+                print(f"Click for pygame. px(x = {x}, y = {y}), row({row}), col({col}) square({piece})")# (7-row)*8+col formula check
+
+        renderer.draw_board(screen)
+        renderer.draw_highlight(screen, selected_square)
+        renderer.draw_pieces(screen, board)
+        renderer.draw_legal_moves(screen, selected_square, board)
         
-        draw_board(screen)
-        draw_pieces(screen, board)
         
         pygame.display.flip()
-        clock.tick(MAX_FPS)
+        clock.tick(constants.FPS)
         
     pygame.quit()
     sys.exit()
