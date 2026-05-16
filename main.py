@@ -26,8 +26,10 @@ def main():
                     #score = engine.minimax(board, depth=2, maximing=True)
                     #print(f"Skor: {score}")
 
-                    move = engine.minimax_move(board,depth=3)
+                    move = engine.minimax_move(board,depth=2)
                     print(move)
+                    board.push(move)
+                    #print(engine.transposition_table)
                 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x,y = pygame.mouse.get_pos()
@@ -43,9 +45,18 @@ def main():
                         selected_square = square
                         print(f"Selected {square}")
                 else:
-                    new_move = chess.Move(selected_square, square)
+                    type = board.piece_type_at(selected_square)
+                    turn=board.turn
 
-                    if new_move in board.legal_moves:
+                    if type == chess.PAWN:
+                        if (turn == chess.WHITE and square // 8 == 7) or (turn == chess.BLACK and square // 8 == 0):
+                            new_move = chess.Move(selected_square, square, promotion=chess.QUEEN)
+                        else:
+                            new_move =chess.Move(selected_square, square)
+                    else:
+                        new_move = chess.Move(selected_square,square)
+
+                    if new_move in board.legal_moves and board.turn == chess.WHITE:
                         board.push(new_move)
                         print("new move correct")
                     else:
@@ -53,8 +64,13 @@ def main():
 
 
                     selected_square = None
+                
 
                 print(f"Click for pygame. px(x = {x}, y = {y}), row({row}), col({col}) square({piece})")# (7-row)*8+col formula check
+
+        if (board.turn == chess.BLACK) and (not board.is_game_over()):
+                        new_move = engine.minimax_move(board, depth=2)
+                        board.push(new_move)
 
         renderer.draw_board(screen)
         renderer.draw_highlight(screen, selected_square)
