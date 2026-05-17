@@ -1,6 +1,6 @@
 import pygame
 import chess
-from constants import SQ_SIZE, BOARD_SIZE
+from gui.constants import SQ_SIZE, BOARD_SIZE
 
 LIGHT = pygame.Color(235, 235, 208)
 DARK = pygame.Color(119, 149, 86)
@@ -11,7 +11,7 @@ def load_piece_images():
     pieces = ['wp', 'wR', 'wN', 'wB', 'wQ', 'wK', 'bp', 'bR', 'bN', 'bB', 'bQ', 'bK']
     for piece in pieces:
         try:
-            IMAGES[piece] = pygame.transform.smoothscale(pygame.image.load(f"images/{piece}.png"), (SQ_SIZE, SQ_SIZE))
+            IMAGES[piece] = pygame.transform.smoothscale(pygame.image.load(f"assets/{piece}.png"), (SQ_SIZE, SQ_SIZE))
         except FileNotFoundError:
             print(f"image {piece} not found")
 

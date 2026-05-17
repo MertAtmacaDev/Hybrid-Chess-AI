@@ -2,8 +2,8 @@ import chess
 import torch
 import pandas as pd
 import matplotlib.pyplot as plt
-from chess_cnn import ChessCNN, fen_to_tensor
-from engine import evaluate, evaluate_cnn
+from engine.chess_cnn import ChessCNN, fen_to_tensor
+from engine.engine import evaluate, evaluate_cnn
 
 print("=" * 50)
 print("analysis 1: PST vs CNN output comparison")

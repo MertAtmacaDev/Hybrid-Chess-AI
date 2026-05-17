@@ -1,13 +1,13 @@
 import chess
 from collections import deque
-from constants import PieceWorth, PST
+from gui.constants import PieceWorth, PST
 import numpy
-from chess_cnn import ChessCNN
+from engine.chess_cnn import ChessCNN
 import torch
-from chess_cnn import ChessCNN, fen_to_tensor
+from engine.chess_cnn import ChessCNN, fen_to_tensor
 
 cnn_model = ChessCNN()
-cnn_model.load_state_dict(torch.load("model-balanced-huber-5m.pth"))
+cnn_model.load_state_dict(torch.load("models/model-balanced-huber-5m.pth"))
 cnn_model.eval()
 
 USE_CNN = True

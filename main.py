@@ -1,9 +1,8 @@
 import pygame
 import chess
 import sys
-import renderer
-import engine
-import constants
+from gui import renderer, constants
+from engine import engine
 
 def main():
     pygame.init()

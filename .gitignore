@@ -1,3 +1,16 @@
 __pycache__/
 *.pyc
 chessData.csv
+
+# Model weights
+models/*.pth
+
+# Generated outputs
+eval_distribution.png
+
+# IDE
+.vscode/
+
+# Virtual environment
+venv/
+satranc_ai/

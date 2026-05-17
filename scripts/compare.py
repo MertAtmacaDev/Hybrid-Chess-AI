@@ -1,5 +1,5 @@
 import chess
-import engine
+import engine.engine as engine
 
 import random
 

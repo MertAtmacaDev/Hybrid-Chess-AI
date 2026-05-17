@@ -3,7 +3,7 @@ import torch.nn as nn
 import pandas as pd
 from torch.utils.data import Dataset, DataLoader
 from sklearn.model_selection import train_test_split
-from chess_cnn import ChessCNN, fen_to_tensor
+from engine.chess_cnn import ChessCNN, fen_to_tensor
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -92,5 +92,5 @@ with torch.no_grad():
 avg_test_loss = test_loss / len(test_loader)
 print(f"Test Loss: {avg_test_loss:.4f}")
 
-torch.save(model.state_dict(), "model-balanced-huber-1m.pth")
+torch.save(model.state_dict(), "models/model-balanced-huber-1m.pth")
 print("Model saved: model-balanced-huber.pth")
