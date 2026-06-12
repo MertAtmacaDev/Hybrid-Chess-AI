@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from engine.chess_cnn import ChessCNN, fen_to_tensor
 from engine.engine import evaluate, evaluate_cnn
 
+
+
 print("=" * 50)
 print("analysis 1: PST vs CNN output comparison")
 print("=" * 50)
@@ -29,6 +31,7 @@ print("=" * 50)
 print("analysis 2: training data distribution")
 print("=" * 50)
 
+# https://www.kaggle.com/datasets/ronakbadhe/chess-evaluations
 df = pd.read_csv("chessData.csv", nrows=1000000)
 df = df[~df['Evaluation'].str.contains('#')]
 df['Evaluation'] = df['Evaluation'].astype(int)

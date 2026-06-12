@@ -59,6 +59,16 @@ PST wins every experiment, but the last model (balanced data + Huber Loss) was m
 
 The CNN was giving ~45 points to almost every position (the dataset average was 39.7). Most of the training data was close to 0, so the model just learned to always guess the average. After we fixed this with balanced sampling (equal number of positions from each score range) and switched from MSE to Huber Loss, the CNN started to tell the difference between good and bad positions.
 
+## Dataset Setup
+
+`train.py` and `analysis.py` require the Stockfish evaluation dataset
+
+1. Download from Kaggle: https://www.kaggle.com/datasets/ronakbadhe/chess-evaluations
+2. Place `chessData.csv` in the project root directory.
+
+Note: `main.py` (playing against the engine) does NOT need the dataset —
+only the trained model in `models/`.
+
 ## How to Run
 
 ```bash
