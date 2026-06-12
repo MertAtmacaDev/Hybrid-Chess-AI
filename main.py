@@ -81,7 +81,7 @@ def main():
         clock.tick(constants.FPS)
         
     pygame.quit()
-    sys.exit()
+    sys.exit() 
 
 if __name__ == "__main__":
     main()

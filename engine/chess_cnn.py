@@ -11,9 +11,9 @@ class ChessCNN(nn.Module):
         self.flatten = nn.Flatten()
         self.fc1 = nn.Linear(128*8*8, 256)
         self.fc2 = nn.Linear(256, 1)
-        self.bn1 = nn.BatchNorm2d(32)   # conv1'in çıktısı 32
-        self.bn2 = nn.BatchNorm2d(64)   # conv2'nin çıktısı 64
-        self.bn3 = nn.BatchNorm2d(128)  # conv3'ün çıktısı 128
+        self.bn1 = nn.BatchNorm2d(32) 
+        self.bn2 = nn.BatchNorm2d(64)  
+        self.bn3 = nn.BatchNorm2d(128) 
         self.dropout = nn.Dropout(0.3)
 
     def forward(self, x):
@@ -84,4 +84,3 @@ def fen_to_tensor(fen):
                 col +=1
     
     return chess_board
-
