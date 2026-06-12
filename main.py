@@ -22,13 +22,10 @@ def main():
             
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_a:
-                    #score = engine.minimax(board, depth=2, maximing=True)
-                    #print(f"Skor: {score}")
 
                     move = engine.minimax_move(board,depth=2)
                     print(move)
                     board.push(move)
-                    #print(engine.transposition_table)
                 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x,y = pygame.mouse.get_pos()

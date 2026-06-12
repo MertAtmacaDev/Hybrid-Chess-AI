@@ -19,6 +19,7 @@ lowerbound = 2
 upperbound = 1
 
 def evaluate(board: chess.Board):
+    #pst-based evaluation. positive = good for white, negative = good for black
     total_score = 0
     for square in chess.SQUARES:
         piece = board.piece_at(square)
@@ -45,10 +46,10 @@ def evaluate_cnn(board):
     tensor = torch.tensor(tensor, dtype=torch.float32).unsqueeze(0)
     with torch.no_grad():
         score = cnn_model(tensor)
-    return score.item()*100
+    return score.item()*100 # model was trained on centipawns/100, scale back up
 
 def move_ordering(board: chess.Board):
-
+    # orders captures first so alpha-beta prunes more branches early
     legal_moves=list(board.legal_moves)
     new_legal_moves = deque()
 
@@ -61,6 +62,7 @@ def move_ordering(board: chess.Board):
     return new_legal_moves
 
 def quiescence(board: chess.Board, alpha, beta, maximizing):
+    #at depth 0 keeps searching only captures until the position is quiet
     if USE_CNN:
         best_score = evaluate_cnn(board)
     else:
@@ -103,6 +105,7 @@ def quiescence(board: chess.Board, alpha, beta, maximizing):
         return best_score
 
 def minimax(board: chess.Board, depth, maximizing, alpha, beta):
+    #minimax with alpha beta pruning and a transposition table
     if depth == 0:
         return quiescence(board, alpha, beta, (board.turn == chess.WHITE))
     

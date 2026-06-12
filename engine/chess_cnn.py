@@ -35,6 +35,7 @@ class ChessCNN(nn.Module):
         return x
     
 def fen_to_tensor(fen):
+    # converts a fen string into a 17x8x8 tensor: 12 piece planes + turn + 4 castling rights
     dict_pieces = {
         "P": 0,
         "N": 1,

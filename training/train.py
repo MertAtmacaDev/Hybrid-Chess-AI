@@ -13,6 +13,8 @@ def load_and_preprocess(csv_path, sample_size=1000000):
     df['Evaluation'] = df['Evaluation'].astype(int)
     df['Evaluation'] = df['Evaluation'].clip(-1500, 1500)
 
+    # balanced sampling: take an equal number of positions from each eval range
+    # fixes the model collapsing to the dataset average
     df['bin'] = pd.cut(df['Evaluation'], bins=[-1501, -1000, -500, -100, 100, 500, 1000, 1501], labels=False)
     min_count = df['bin'].value_counts().min()
     per_bin = min(min_count, sample_size // 7)
