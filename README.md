@@ -59,6 +59,18 @@ PST wins every experiment, but the last model (balanced data + Huber Loss) was m
 
 The CNN was giving ~45 points to almost every position (the dataset average was 39.7). Most of the training data was close to 0, so the model just learned to always guess the average. After we fixed this with balanced sampling (equal number of positions from each score range) and switched from MSE to Huber Loss, the CNN started to tell the difference between good and bad positions.
 
+## Setup
+
+```bash
+# 1. Create and activate a virtual environment (recommended)
+python -m venv venv
+venv\Scripts\activate        # Windows
+# source venv/bin/activate   # macOS/Linux
+
+# 2. Install dependencies
+pip install -r requirements.txt
+```
+
 ## Dataset Setup
 
 `train.py` and `analysis.py` require the Stockfish evaluation dataset
@@ -85,15 +97,10 @@ python -m scripts.compare
 # Check CNN outputs and data distribution
 python -m training.analysis
 ```
+
 **How to play:** You play White. Click a piece to select it, then click a
 square to move. The engine plays Black automatically after your move.
 Press the `A` key to make the engine play a move for the current side.
-
-## Requirements
-
-```bash
-pip install -r requirements.txt
-```
 
 ## Future Plans
 
