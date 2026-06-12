@@ -62,6 +62,7 @@ The CNN was giving ~45 points to almost every position (the dataset average was 
 ## Dataset Setup
 
 `train.py` and `analysis.py` require the Stockfish evaluation dataset
+(`chessData.csv`, ~776 MB), which is not included in this repo due to its size.
 
 1. Download from Kaggle: https://www.kaggle.com/datasets/ronakbadhe/chess-evaluations
 2. Place `chessData.csv` in the project root directory.
@@ -84,6 +85,9 @@ python -m scripts.compare
 # Check CNN outputs and data distribution
 python -m training.analysis
 ```
+**How to play:** You play White. Click a piece to select it, then click a
+square to move. The engine plays Black automatically after your move.
+Press the `A` key to make the engine play a move for the current side.
 
 ## Requirements
 
@@ -95,4 +99,4 @@ pip install -r requirements.txt
 
 - Speed benchmarks (how fast PST vs CNN makes a move)
 - Elo estimation for both engines
-- Training with 5M+ samples
+- Training with more samples (5M+)
